@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MainStudent 
+public static void main(String[] args){
+    String name;
+    String id;
+    double grade;
+
+    Student(String name, String id, double grade) {
+        this.name = name;
+        this.id = id;
+        this.grade = grade;
+    }
+
+    void display() {
+        System.out.println("ID: " + id + ", Name: " + name + ", Grade: " + grade);
+    }
+
+    void updateGrade(double newGrade) {
+        this.grade = newGrade;
+    }
+}
+
+public class StudentGradesApp {
+    public static void main(String[] args) {
+        ArrayList<Student> students = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n--- Student Grades App ---");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Update Student Grade");
+            System.out.println("4. Exit");
+            System.out.print("Enter choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter ID: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Enter Grade: ");
+                    double grade = scanner.nextDouble();
+                    students.add(new Student(name, id, grade));
+                    break;
+                case 2:
+                    for (Student s : students) {
+                        s.display();
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter ID to update: ");
+                    String updateId = scanner.nextLine();
+                    boolean found = false;
+                    for (Student s : students) {
+                        if (s.id.equals(updateId)) {
+                            System.out.print("Enter new grade: ");
+                            double newGrade = scanner.nextDouble();
+                            s.updateGrade(newGrade);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) System.out.println("Student not found.");
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        } while (choice != 4);
+
+        scanner.close();
+    }
+}
